@@ -8,6 +8,8 @@ public class Gun : MonoBehaviour
     public AudioSource errorSound;
     public GameObject bluePortal;
     public GameObject orangePortal;
+    public GameObject cube;
+    public Camera cam;
     public Transform firingPoint;
 
    // public object Q { get; private set; }
@@ -31,16 +33,26 @@ public class Gun : MonoBehaviour
     {
         RaycastHit raycastHit;
 
-        if(Physics.Raycast(firingPoint.position, transform.TransformDirection(Vector3.forward), out raycastHit, Mathf.Infinity))
-        {
+        if (Physics.Raycast(firingPoint.position, transform.TransformDirection(Vector3.forward), out raycastHit, Mathf.Infinity))
+        {          //&& raycastHit.collider.gameObject.name != "OrangePortal" && raycastHit.collider.gameObject.name != "BluePortal"
+                   //&& raycastHit.collider.gameObject.GetComponent<Rigidbody>() == null
+                   //&& raycastHit.collider.gameObject.tag != "noportal")
+        
             portalSound.Play();
-            if(isOrange)
+            if(isOrange == true)
             {
                 orangePortal.transform.SetPositionAndRotation(raycastHit.point, Quaternion.FromToRotation(Vector3.forward, raycastHit.normal));
             }
             else
             {
-                bluePortal.transform.SetPositionAndRotation(raycastHit.point, Quaternion.FromToRotation(Vector3.forward, raycastHit.normal));
+                //if (raycastHit.collider.gameObject.name != "cube")
+                //{
+                    bluePortal.transform.SetPositionAndRotation(raycastHit.point, Quaternion.FromToRotation(Vector3.forward, raycastHit.normal));
+               // }
+                //else
+                //{
+                 //   cube.transform.SetPositionAndRotation(cam.transform.position, Quaternion.FromToRotation(Vector3.forward, raycastHit.normal));
+               // }
             }
         }
         else
